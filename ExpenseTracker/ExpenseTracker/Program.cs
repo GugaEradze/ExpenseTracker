@@ -1,8 +1,9 @@
-using ExpenceTracker.Data;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System.Configuration;
+using Microsoft.Extensions.Configuration;
+using ExpenceTracker.Data;
+using ExpenseTracker.Data;
+using ExpenceTracker.Interfaces;
 
 namespace ExpenceTracker
 {
@@ -36,6 +37,9 @@ namespace ExpenceTracker
                     sqlOptions => sqlOptions.EnableRetryOnFailure()
                 )
             );
+
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddTransient<Form1>();
         }
