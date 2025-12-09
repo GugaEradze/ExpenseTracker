@@ -1,17 +1,43 @@
-namespace ExpenseTracker
+using ExpenceTracker.Data;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using System.Configuration;
+
+namespace ExpenceTracker
 {
     internal static class Program
     {
-        /// <summary>
-        ///  The main entry point for the application.
-        /// </summary>
+        public static IServiceProvider ServiceProvider { get; private set; } = null!;
+
         [STAThread]
         static void Main()
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new Form1());
+
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .Build();
+
+            var services = new ServiceCollection();
+            ConfigureServices(services, configuration);
+            ServiceProvider = services.BuildServiceProvider();
+
+            var mainForm = ServiceProvider.GetRequiredService<Form1>();
+            Application.Run(mainForm);
+        }
+
+        private static void ConfigureServices(IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddDbContext<ExpenseTrackerDbContext>(options =>
+                options.UseSqlServer(
+                    configuration.GetConnectionString("DefaultConnection"),
+                    sqlOptions => sqlOptions.EnableRetryOnFailure()
+                )
+            );
+
+            services.AddTransient<Form1>();
         }
     }
 }
