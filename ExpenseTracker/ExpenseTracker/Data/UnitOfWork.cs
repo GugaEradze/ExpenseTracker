@@ -1,6 +1,6 @@
 ﻿using ExpenceTracker.Data;
-using ExpenceTracker.Interfaces;
 using ExpenceTracker.Models;
+using ExpenseTracker.Services.Interfaces;
 using Microsoft.EntityFrameworkCore.Storage;
 
 namespace ExpenseTracker.Data

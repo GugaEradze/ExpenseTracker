@@ -1,5 +1,5 @@
 ﻿using ExpenceTracker.Data;
-using ExpenceTracker.Interfaces;
+using ExpenseTracker.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 

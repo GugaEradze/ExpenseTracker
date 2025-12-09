@@ -1,6 +1,6 @@
 ﻿using ExpenceTracker.Models;
 
-namespace ExpenceTracker.Interfaces
+namespace ExpenseTracker.Services.Interfaces
 {
     public interface IUnitOfWork : IDisposable
     {

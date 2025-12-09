@@ -1,9 +1,11 @@
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Configuration;
 using ExpenceTracker.Data;
+using ExpenceTracker.Services;
+using ExpenceTracker.Services.Interfaces;
 using ExpenseTracker.Data;
-using ExpenceTracker.Interfaces;
+using ExpenseTracker.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace ExpenceTracker
 {
@@ -40,6 +42,8 @@ namespace ExpenceTracker
 
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            services.AddScoped<ITransactionService, TransactionService>();
 
             services.AddTransient<Form1>();
         }
